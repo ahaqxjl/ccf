@@ -1,3 +1,5 @@
+// for more info: http://miaozhewen.cn/mzwblog/ccf_simulation_test/
+
 import java.util.Scanner;
 
 public class Main {
@@ -33,5 +35,6 @@ public class Main {
 		}
 		
 		System.out.println(numbers[count - 1][5]);
+		scanner.close();
 	}
 }
