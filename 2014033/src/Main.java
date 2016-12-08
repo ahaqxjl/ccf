@@ -17,8 +17,8 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
-//		String argsStr = scanner.nextLine();
-		String argsStr = "a:lbw:x";
+		String argsStr = scanner.nextLine();
+//		String argsStr = "a:lbw:x";
 		ArrayList<CommandArg> commandArgs = new ArrayList<CommandArg>();
 		
 		for (int i = 0; i < argsStr.length(); i++) {
@@ -31,18 +31,18 @@ public class Main {
 			}
 		}
 		
-//		int count = Integer.parseInt(scanner.nextLine());
-		int count = 4;
+		int count = Integer.parseInt(scanner.nextLine());
+//		int count = 4;
 		
 		String[] commands = new String[count];
 		
-//		for (int i = 0; i < count; i++) {
-//			commands[i] = scanner.nextLine();
-//		}
-		commands[0] = "ls -a -l -a documents -b";
-		commands[1] = "ls";
-		commands[2] = "ls -w 10 -x -w 15";
-		commands[3] = "ls -a -b -c -d -e -l";
+		for (int i = 0; i < count; i++) {
+			commands[i] = scanner.nextLine();
+		}
+//		commands[0] = "ls -a -l -a documents -b";
+//		commands[1] = "ls";
+//		commands[2] = "ls -w 10 -x -w 15";
+//		commands[3] = "ls -a -b -c -d -e -l";
 		
 		for (int i = 0; i < count; i++) {
 			ArrayList<CommandArg> currentArgs = new ArrayList<CommandArg>();
@@ -55,18 +55,22 @@ public class Main {
 					boolean found = false;
 					if (elements[j].startsWith("-") && elements[j].length() == 2) {
 						char arg = elements[j].charAt(1);
+						if (arg - 'a' < 0 || arg - 'a' > 25) {
+							break;
+						}
 						for (int k = 0; k < commandArgs.size(); k++) {
 							if (arg == commandArgs.get(k).argName) {
 								if (commandArgs.get(k).hasValue) {
-									if (j < len - 1 && !elements[j + 1].startsWith("-")) {
+									if (j < len - 1) {
 										found = true;
 										CommandArg currentArg = new CommandArg(arg, true);
 										currentArg.value = elements[j + 1];
 										currentArgs.add(currentArg);
 										j++;
+									} else {
 										break;
 									}
-								} else if (j == len - 1 || elements[j + 1].startsWith("-")) {
+								} else{
 									found = true;
 									currentArgs.add(new CommandArg(arg, false));
 									break;
